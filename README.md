@@ -1,54 +1,13 @@
 # ms-owens-infra-7
-The repo will manage IaC for MS-Owen-app
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.67"
-    }
-  }
+# The repo will manage IaC for MS-Owen-app
+# EC2 Frontend Instance Creation
 
-  required_version = ">= 1.9.5"
-}
-
-provider "aws" {
-  region = "eu-west-2"
-  
-}
-resource "aws_security_group" "allow_ssh" {
-  name = "allow_ssh"
-  # ... other configuration ...
-
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-
-  ingress {
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-
-  ingress {
-    from_port        = 8080
-    to_port          = 8080
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-}
-resource "aws_instance" "app_server" {
-  ami                    = "ami-0b45ae66668865cd6"
-  instance_type          = "t2.micro"
-  key_name               = "DevOpsKeys"
-  vpc_security_group_ids = [aws_security_group.allow_ssh.id]
-  tags = {
-    Name = "Frontend"
-  }
-}
+## Installations/Prerequisite
+export AWS_ACCESS_KEY_ID =
+export AWS_SECRET_KEY_ID = 
+run terraform init for initialisation of provider plugins
+run terraform validate to check syntax of codes
+run terraform fmt to format all terraform .ft files
+run terraform plan to show the envisioned resources to be provisioned
+run terraform apply to provision the actual resources
+Finally, run terraform destroy to terminate all the provisioned AWS resources to avoid bi;lling
